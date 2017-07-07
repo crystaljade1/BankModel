@@ -35,17 +35,7 @@ public class Person: Hashable {
 
 public class Employee: Person {
     
-    func addNewEmployee(employee: Employee, employees: Bank.Employees) -> Bool {
-        var employees = employees
-        
-        if employees.contains(employee) {
-            return false
-        } else {
-            employees.insert(employee)
-            return true
-        }
     }
-}
 
 public class Customer: Person {
     var email: String
@@ -58,15 +48,5 @@ public class Customer: Person {
         self.givenName = givenName
         self.familyName = familyName
     }
-    
-    func addNewCustomer(customer: Customer, customers: [Customer]) -> Bool {
-        var customers = customers
-        
-        guard customer.email == customer.email else {
-            return false
-        }
-        
-        customers.append(customer)
-        return true
-    }
+
 }

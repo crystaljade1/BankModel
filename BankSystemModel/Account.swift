@@ -82,6 +82,38 @@ public class Account {
             self.dateCreated = Account.Transaction.sanitize(date: dateCreated)
         }
     }
+    
+    func makeCustomerTransaction(customer: Customer, account: Account, amount: Double, transactionType: Account.Transaction.TransactionType, userDescription: String, vendor: String, dateCreated: Date) -> Transaction? {
+        
+        guard (customer.accounts.contains(account) == true) else {
+            return nil
+        }
+                
+        let newTransaction = Transaction(amount: amount, userDescription: userDescription, vendor: vendor, datePosted: nil, dateCreated: dateCreated)
+        
+        switch transactionType {
+        case .credit(amount):
+            guard amount.sign == .plus else {
+                return nil
+            }
+            
+            balance.add(amount)
+            transactions.append(newTransaction)
+            return newTransaction
+            
+        case .debit(amount: amount):
+            guard amount < account.balance else {
+                return nil
+            }
+            
+            balance.subtract(amount)
+            transactions.append(newTransaction)
+            return newTransaction
+            
+        default:
+            return nil
+        }
+    }
 }
 
 extension Account: Hashable {
