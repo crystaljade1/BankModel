@@ -8,82 +8,28 @@
 
 import Foundation
 
-public class Account {
+class Account {
     enum AccountType {
         case checking
         case savings
     }
     
-    typealias ID = UUID
-    let id: ID
+    let id: UUID
+    let accountType: AccountType
     
-    typealias AccountBalance = Double
-    var balance: AccountBalance
-    
-    init(id: UUID, balance: Double) {
+    public private(set) var balance: Double
+
+    init(accountType: AccountType, id: UUID = UUID(), balance: Double = 0) {
         self.id = id
+        self.accountType = accountType
         self.balance = balance
     }
     
     public typealias Transactions = [Transaction]
     public var transactions: Transactions = []
-    
-    public struct Transaction: Hashable {
+           
         
-        public var hashValue: Int {
-            let transaction: Transaction
-            transaction = Transaction(amount: amount, userDescription: userDescription, vendor: vendor, datePosted: datePosted)
-            return transaction.hashValue
-        }
-        
-        public static func == (_ lhs: Transaction, _ rhs: Transaction) -> Bool {
-            return (lhs.amount == rhs.amount &&
-                lhs.dateCreated == rhs.dateCreated &&
-                lhs.datePosted == rhs.datePosted &&
-                lhs.vendor == rhs.vendor &&
-                lhs.userDescription == rhs.userDescription)
-        }
-        
-        enum TransactionType {
-            case debit(amount: Double)
-            case credit(amount: Double)
-        }
-        
-        let amount: Double
-        var userDescription: String?
-        let vendor: String
-        var datePosted: Date?
-        let dateCreated: Date
-        static func sanitize(date: Date) -> Date {
-            let calendar = Calendar.current
-            let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-            return calendar.date(from: components)!
-        }
-        
-        public init(amount: Double,
-                    userDescription: String?,
-                    vendor: String,
-                    datePosted: Date?) {
-            self.init(amount: amount, userDescription: userDescription,
-                      vendor: vendor,
-                      datePosted: datePosted,
-                      dateCreated: Date())
-        }
-        
-        internal init(amount: Double,
-                      userDescription: String?,
-                      vendor: String,
-                      datePosted: Date?,
-                      dateCreated: Date) {
-            self.amount = amount
-            self.userDescription = userDescription
-            self.vendor = vendor
-            self.datePosted = datePosted.map(Account.Transaction.sanitize(date: ))
-            self.dateCreated = Account.Transaction.sanitize(date: dateCreated)
-        }
-    }
-    
-    func makeCustomerTransaction(customer: Customer, account: Account, amount: Double, transactionType: Account.Transaction.TransactionType, userDescription: String, vendor: String, dateCreated: Date) -> Transaction? {
+    func makeCustomerTransaction(customer: Customer, account: Account, amount: Double, transactionType: Transaction.TransactionType, userDescription: String, vendor: String, dateCreated: Date) -> Transaction? {
         
         guard (customer.accounts.contains(account) == true) else {
             return nil
@@ -123,5 +69,18 @@ extension Account: Hashable {
     
     public static func == (lhs: Account, rhs: Account) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+
+class SavingsAccount: Account {
+    init(balance: Double = 0, id: UUID = UUID()) {
+        super.init(accountType: .savings, id: id, balance: balance)
+    }
+
+}
+
+class CheckingAccount: Account {
+    init(balance: Double = 0, id: UUID = UUID()) {
+        super.init(accountType: .checking, id: id, balance: balance)
     }
 }

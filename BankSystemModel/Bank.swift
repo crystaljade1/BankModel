@@ -11,68 +11,89 @@ import Foundation
 public class Bank {
     
     var bankAddress = "1309 5th Avenue, New York, NY 10029"
-    var employees = Set<Employee>()
-    var customers = [Customer]()
+    var employees: Set<Employee>
     
-    typealias AccountDirectory = [UUID: Account.AccountBalance]
-    var accountDirectory: AccountDirectory = [:]
+    typealias AccountDirectory = [Customer: Set<Account>]
+    var accountDirectory: AccountDirectory
     
-    var transactionType = Account.Transaction.TransactionType.self
+    init(employees: Set<Employee> = [], accountDirectory: AccountDirectory = [:]) {
+        self.employees = employees
+        self.accountDirectory = accountDirectory
+    }
+}
+
+extension Bank {
     
-    func addNewEmployee(employee: Employee?) -> Bool {
-        
-        guard let employee = employee, !employees.contains(employee) else {
+    var customers: Set<Customer> {
+        return Set(accountDirectory.keys)
+    }
+
+    func addNewEmployee(employee: Employee) -> Bool {
+        if employees.contains(employee) {
             return false
+        } else {
+            employees.insert(employee)
+            return true
         }
-        
-        employees.insert(employee)
-        return true
     }
 
     func addNewCustomer(customer: Customer) -> Bool {
         
-        guard customer.email == customer.email, !customers.contains(customer) else {
+        guard customers.contains(customer) == false else {
             return false
         }
         
-        customers.append(customer)
+        accountDirectory[customer] = []
         return true
     }
     
 
     func createNewAccount(customer: Customer, accountType: Account.AccountType) -> Account? {
         
-        guard (customers.contains(customer) == true) else {
+        guard var customerAccounts = accountDirectory[customer] else {
             return nil
         }
         
-        let id = Account.ID()
-        let balance = Account.AccountBalance()
-        let newAccount: Account? = Account(id: id, balance: balance)
+        let newAccount: Account
         
-        customer.accounts.append(newAccount!)
-        accountDirectory.updateValue(balance, forKey: id)
+        switch accountType {
+        case .checking:
+            newAccount = CheckingAccount()
+        case .savings:
+            newAccount = SavingsAccount()
+        }
+        
+        customerAccounts.insert(newAccount)
+        accountDirectory[customer] = customerAccounts
        
         return newAccount
     }
 
-    func getSpecificAccountBalance(id: UUID) -> Double {
-        let givenAccount = accountDirectory.filter { $0.key == id }
-        let givenAccountBalance = givenAccount.reduce(0) { $0 + $1.1 }
+    func getSpecificAccountBalance(customer: Customer, id: UUID) -> Double? {
+        guard let customerAccounts = accountDirectory[customer] else {
+            return nil
+        }
+        
+        let givenAccountBalance = customerAccounts.reduce(0) { $0 + $1.balance }
         return givenAccountBalance
     }
     
-    func getAllAccountsForSpecificCustomer(customer: Customer) -> [Account]? {
-        if customer.email == customer.email {
-            return customer.accounts
-        } else {
+    func getAllAccountsForSpecificCustomer(customer: Customer) -> Set<Account>? {
+        guard let customerAccounts = accountDirectory[customer] else {
             return nil
         }
+        
+        accountDirectory[customer] = customerAccounts
+        return customerAccounts
     }
     
-    func getBalanceOfAllAccounts(accountDirectory: AccountDirectory) -> Double {
-        let bankBalance = accountDirectory.reduce(0) { $0 + $1.1 }
-        return bankBalance
+    func getBalanceOfAllAccounts() -> Double? {
+        for (_, accounts) in accountDirectory {
+            let totalBankBalance = accounts.reduce(0) { $0 + $1.balance }
+            return totalBankBalance
+        }
+        
+        return nil
     }
 }
 

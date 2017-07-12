@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class Person: Hashable {
+class Person: Hashable {
     
     var givenName: String
     var familyName: String
@@ -33,20 +33,5 @@ public class Person: Hashable {
     
 }
 
-public class Employee: Person {
-    
-    }
 
-public class Customer: Person {
-    var email: String
-    var accounts: [Account]
-    
-    init(email: String, accounts: [Account], givenName: String, familyName: String) {
-        self.email = email
-        self.accounts = accounts
-        super.init(givenName: givenName, familyName: familyName)
-        self.givenName = givenName
-        self.familyName = familyName
-    }
 
-}
