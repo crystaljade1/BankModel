@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		824C30FC1F13EBDE00876E7B /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824C30FB1F13EBDE00876E7B /* Employee.swift */; };
+		824C30FE1F13ED9F00876E7B /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824C30FD1F13ED9F00876E7B /* Customer.swift */; };
+		824C31001F169B5400876E7B /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824C30FF1F169B5400876E7B /* Transaction.swift */; };
 		82DD73B01EDE368500D39188 /* BankSystemModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82DD73A61EDE368500D39188 /* BankSystemModel.framework */; };
 		82DD73B51EDE368500D39188 /* BankSystemModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD73B41EDE368500D39188 /* BankSystemModelTests.swift */; };
 		82DD73B71EDE368500D39188 /* BankSystemModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 82DD73A91EDE368500D39188 /* BankSystemModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		824C30FB1F13EBDE00876E7B /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		824C30FD1F13ED9F00876E7B /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		824C30FF1F169B5400876E7B /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		82DD73A61EDE368500D39188 /* BankSystemModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BankSystemModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82DD73A91EDE368500D39188 /* BankSystemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BankSystemModel.h; sourceTree = "<group>"; };
 		82DD73AA1EDE368500D39188 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,8 +85,11 @@
 			children = (
 				82DD73A91EDE368500D39188 /* BankSystemModel.h */,
 				82DD73C01EDE36B200D39188 /* Account.swift */,
+				824C30FF1F169B5400876E7B /* Transaction.swift */,
 				82DD73C21EDE36B700D39188 /* Bank.swift */,
 				82DD73C41EDE36BD00D39188 /* Person.swift */,
+				824C30FD1F13ED9F00876E7B /* Customer.swift */,
+				824C30FB1F13EBDE00876E7B /* Employee.swift */,
 				82DD73AA1EDE368500D39188 /* Info.plist */,
 			);
 			path = BankSystemModel;
@@ -207,6 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				82DD73C51EDE36BD00D39188 /* Person.swift in Sources */,
+				824C31001F169B5400876E7B /* Transaction.swift in Sources */,
+				824C30FE1F13ED9F00876E7B /* Customer.swift in Sources */,
+				824C30FC1F13EBDE00876E7B /* Employee.swift in Sources */,
 				82DD73C11EDE36B200D39188 /* Account.swift in Sources */,
 				82DD73C31EDE36B700D39188 /* Bank.swift in Sources */,
 			);
@@ -414,6 +426,7 @@
 				82DD73BC1EDE368500D39188 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82DD73BD1EDE368500D39188 /* Build configuration list for PBXNativeTarget "BankSystemModelTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +435,7 @@
 				82DD73BF1EDE368500D39188 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
