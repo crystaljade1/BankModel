@@ -161,4 +161,8 @@ class BankSystemModelTests: XCTestCase {
         XCTAssertTrue(balance == 200.00)
     }
     
+    func testJSONPull() {
+        let bank = Bank()
+    }
+    
 }

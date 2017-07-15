@@ -20,7 +20,7 @@ class Bank {
     static var employeesKey: String = "employees"
     static var accountDirectoryKey: String = "accountDirectory"
     
-    static func pullBank(json: [[String: Any]]) -> [Bank]? {
+    public static func pullBank(json: [[String: Any]]) -> [Bank]? {
         let back = json.flatMap(Bank.init(json:))
         guard back.count == json.count else {
             return nil

@@ -70,6 +70,7 @@ extension Account: Hashable {
     public static func == (lhs: Account, rhs: Account) -> Bool {
         return lhs.id == rhs.id
     }
+    
 }
 
 class SavingsAccount: Account {
