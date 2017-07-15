@@ -8,18 +8,42 @@
 
 import Foundation
 
-public class Bank {
+class Bank {
     
-    var bankAddress = "1309 5th Avenue, New York, NY 10029"
+    var bankAddress: String
     var employees: Set<Employee>
     
     typealias AccountDirectory = [Customer: Set<Account>]
     var accountDirectory: AccountDirectory
+
+    static var bankAddressKey: String = "address"
+    static var employeesKey: String = "employees"
+    static var accountDirectoryKey: String = "accountDirectory"
     
-    init(employees: Set<Employee> = [], accountDirectory: AccountDirectory = [:]) {
+    static func pullBank(json: [[String: Any]]) -> [Bank]? {
+        let back = json.flatMap(Bank.init(json:))
+        guard back.count == json.count else {
+            return nil
+        }
+        return back
+    }
+    
+    init(bankAddress: String = "", employees: Set<Employee> = [], accountDirectory: AccountDirectory = [:]) {
+        self.bankAddress = bankAddress
         self.employees = employees
         self.accountDirectory = accountDirectory
     }
+    
+    convenience init?(json: [String: Any]) {
+        guard let bankAddress = json[Bank.bankAddressKey] as? String,
+        let employees = json[Bank.employeesKey] as? Set<Employee>,
+        let accountDirectory = json[Bank.accountDirectoryKey] as? AccountDirectory
+            else {
+                return nil
+        }
+        self.init(bankAddress: bankAddress, employees: employees, accountDirectory: accountDirectory)
+    }
+    
 }
 
 extension Bank {
@@ -96,4 +120,3 @@ extension Bank {
         return nil
     }
 }
-
